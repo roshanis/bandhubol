@@ -55,12 +55,15 @@ export async function POST(request: NextRequest) {
       voiceId,
     });
 
+    // Convert Buffer to Uint8Array for NextResponse compatibility
+    const uint8Array = new Uint8Array(audioBuffer);
+
     // Return audio as response
-    return new NextResponse(audioBuffer, {
+    return new NextResponse(uint8Array, {
       status: 200,
       headers: {
         "Content-Type": "audio/mpeg",
-        "Content-Length": audioBuffer.length.toString(),
+        "Content-Length": uint8Array.length.toString(),
         "Cache-Control": "public, max-age=3600", // Cache for 1 hour
       },
     });
