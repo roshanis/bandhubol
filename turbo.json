@@ -1,5 +1,16 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "OPENAI_API_KEY",
+    "OPENAI_MODEL",
+    "ELEVENLABS_API_KEY",
+    "ELEVENLABS_VOICE_RIYA",
+    "ELEVENLABS_VOICE_ARJUN",
+    "ELEVENLABS_VOICE_MEERA",
+    "ELEVENLABS_VOICE_KABIR",
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
