@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createTTSClient, AVATAR_VOICES } from "@bandhubol/core";
+import { createTTSClient, getAvatarVoices } from "@bandhubol/core";
 
 export interface TTSRequest {
   text: string;
@@ -35,11 +35,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Get avatar voices with environment variable overrides
+    const avatarVoices = getAvatarVoices({
+      ELEVENLABS_VOICE_RIYA: process.env.ELEVENLABS_VOICE_RIYA,
+      ELEVENLABS_VOICE_ARJUN: process.env.ELEVENLABS_VOICE_ARJUN,
+      ELEVENLABS_VOICE_MEERA: process.env.ELEVENLABS_VOICE_MEERA,
+      ELEVENLABS_VOICE_KABIR: process.env.ELEVENLABS_VOICE_KABIR,
+    });
+
+    // Get voice ID for this avatar
+    const voiceId = avatarVoices[avatarId] ?? avatarVoices.riya;
+
     // Create TTS client
     const tts = createTTSClient({ apiKey });
 
-    // Generate speech
-    const audioBuffer = await tts.speakAsAvatar(avatarId, text);
+    // Generate speech with specific voice
+    const audioBuffer = await tts.textToSpeech({
+      text,
+      voiceId,
+    });
 
     // Return audio as response
     return new NextResponse(audioBuffer, {
@@ -82,4 +96,3 @@ export async function GET(request: NextRequest) {
 
   return POST(fakeRequest);
 }
-

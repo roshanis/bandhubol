@@ -29,6 +29,13 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key-here
 
 # ElevenLabs Configuration (optional - enables voice responses)
 ELEVENLABS_API_KEY=your-elevenlabs-api-key-here
+
+# Custom Voice IDs (optional - override default voices)
+# Find voices at: https://elevenlabs.io/voice-library
+# ELEVENLABS_VOICE_RIYA=your-voice-id-for-riya
+# ELEVENLABS_VOICE_ARJUN=your-voice-id-for-arjun
+# ELEVENLABS_VOICE_MEERA=your-voice-id-for-meera
+# ELEVENLABS_VOICE_KABIR=your-voice-id-for-kabir
 ```
 
 ### Getting Your API Keys
@@ -137,14 +144,29 @@ bandhubol/
 
 Each avatar has a unique voice powered by ElevenLabs:
 
-| Avatar | Voice Style | ElevenLabs Voice |
-|--------|-------------|------------------|
-| Riya 🌸 | Warm, empathetic | Rachel |
-| Arjun 🌿 | Calm, grounded | Antoni |
-| Meera ✨ | Friendly, playful | Bella |
-| Kabir 🔮 | Direct, thoughtful | Arnold |
+| Avatar | Voice Style | Default Voice | Voice ID |
+|--------|-------------|---------------|----------|
+| Riya 🌸 | Warm, empathetic | Rachel | `21m00Tcm4TlvDq8ikWAM` |
+| Arjun 🌿 | Calm, grounded | Antoni | `ErXwobaYiN019PkySvjV` |
+| Meera ✨ | Friendly, playful | Bella | `EXAVITQu4vr4xnSDxMaL` |
+| Kabir 🔮 | Direct, thoughtful | Arnold | `VR6AewLTigWG4xSOukaG` |
 
 Click the 🔈 button on any assistant message to hear it spoken aloud.
 
 The voices use the `eleven_multilingual_v2` model for natural Hindi/Hinglish support.
+
+### Customizing Voices
+
+1. Go to [ElevenLabs Voice Library](https://elevenlabs.io/voice-library)
+2. Search for "Hindi" or "Indian" voices
+3. Click "Add to VoiceLab" on voices you like
+4. Go to VoiceLab, click ⋮ on the voice → "Copy Voice ID"
+5. Add to your environment variables:
+
+```bash
+ELEVENLABS_VOICE_RIYA=your-custom-voice-id
+ELEVENLABS_VOICE_ARJUN=your-custom-voice-id
+ELEVENLABS_VOICE_MEERA=your-custom-voice-id
+ELEVENLABS_VOICE_KABIR=your-custom-voice-id
+```
 
