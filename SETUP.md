@@ -20,7 +20,7 @@ Create a `.env.local` file in `apps/web/` with the following:
 ```bash
 # OpenAI Configuration (required)
 OPENAI_API_KEY=sk-your-openai-api-key-here
-OPENAI_MODEL=gpt-4-turbo
+OPENAI_MODEL=gpt-5
 
 # Supabase Configuration (optional - enables message persistence)
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co

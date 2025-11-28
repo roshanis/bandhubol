@@ -79,10 +79,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create OpenAI client (using gpt-4-turbo as default)
+    // Create OpenAI client (using gpt-5 as default)
     const llm = createOpenAIClient({
       apiKey: openaiKey,
-      model: process.env.OPENAI_MODEL ?? "gpt-4-turbo",
+      model: process.env.OPENAI_MODEL ?? "gpt-5",
       temperature: 0.8,
       maxTokens: 1024,
     });
