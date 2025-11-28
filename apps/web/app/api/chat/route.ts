@@ -79,10 +79,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create OpenAI client (using gpt-4o-mini as fallback default)
+    // Create OpenAI client (using gpt-5-mini as default)
     const llm = createOpenAIClient({
       apiKey: openaiKey,
-      model: process.env.OPENAI_MODEL ?? "gpt-4o-mini",
+      model: process.env.OPENAI_MODEL ?? "gpt-5-mini",
       maxCompletionTokens: 4096,
     });
 
