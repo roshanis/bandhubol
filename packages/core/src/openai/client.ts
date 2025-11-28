@@ -5,14 +5,12 @@ import type { LanguageModelClient } from "../conversation/runTurn";
 export interface OpenAIClientConfig {
   apiKey: string;
   model?: string;
-  temperature?: number;
   maxCompletionTokens?: number;
 }
 
 export class OpenAIClient implements LanguageModelClient {
   private client: OpenAI;
   private model: string;
-  private temperature: number;
   private maxCompletionTokens: number;
 
   constructor(config: OpenAIClientConfig) {
@@ -20,7 +18,6 @@ export class OpenAIClient implements LanguageModelClient {
       apiKey: config.apiKey,
     });
     this.model = config.model ?? "gpt-5";
-    this.temperature = config.temperature ?? 0.8;
     this.maxCompletionTokens = config.maxCompletionTokens ?? 1024;
   }
 
@@ -31,7 +28,6 @@ export class OpenAIClient implements LanguageModelClient {
         role: m.role,
         content: m.content,
       })),
-      temperature: this.temperature,
       max_completion_tokens: this.maxCompletionTokens,
     });
 

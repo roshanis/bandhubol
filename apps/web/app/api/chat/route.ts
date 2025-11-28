@@ -83,7 +83,6 @@ export async function POST(request: NextRequest) {
     const llm = createOpenAIClient({
       apiKey: openaiKey,
       model: process.env.OPENAI_MODEL ?? "gpt-5",
-      temperature: 0.8,
       maxCompletionTokens: 1024,
     });
 
