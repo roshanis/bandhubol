@@ -443,3 +443,58 @@ button {
   0%, 60%, 100% { transform: translateY(0); }
   30% { transform: translateY(-6px); }
 }
+
+/* ============================================
+   SPEAK BUTTON (Text-to-Speech)
+   ============================================ */
+
+.speak-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  vertical-align: middle;
+}
+
+.speak-button:hover:not(:disabled) {
+  background: var(--accent);
+  transform: scale(1.1);
+}
+
+.speak-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.speak-icon,
+.speak-playing,
+.speak-loading {
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.speak-playing {
+  animation: speakPulse 1s ease-in-out infinite;
+}
+
+.speak-loading {
+  animation: speakSpin 1s linear infinite;
+}
+
+@keyframes speakPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+@keyframes speakSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

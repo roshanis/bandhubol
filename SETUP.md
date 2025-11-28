@@ -6,6 +6,7 @@
 - npm or yarn
 - OpenAI API key
 - (Optional) Supabase account for message persistence
+- (Optional) ElevenLabs API key for text-to-speech
 
 ## 1. Install Dependencies
 
@@ -25,6 +26,9 @@ OPENAI_MODEL=gpt-5-mini
 # Supabase Configuration (optional - enables message persistence)
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key-here
+
+# ElevenLabs Configuration (optional - enables voice responses)
+ELEVENLABS_API_KEY=your-elevenlabs-api-key-here
 ```
 
 ### Getting Your API Keys
@@ -39,6 +43,12 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key-here
 2. Go to Project Settings > API
 3. Copy the Project URL to `NEXT_PUBLIC_SUPABASE_URL`
 4. Copy the `anon` public key to `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+#### ElevenLabs (Optional - for voice)
+1. Create an account at [ElevenLabs](https://elevenlabs.io)
+2. Go to Profile Settings > API Keys
+3. Create a new API key
+4. Copy it to `ELEVENLABS_API_KEY`
 
 ## 3. Supabase Database Setup (Optional)
 
@@ -79,6 +89,7 @@ bandhubol/
 │   └── web/                 # Next.js frontend
 │       ├── app/
 │       │   ├── api/chat/    # Chat API route (calls OpenAI)
+│       │   ├── api/tts/     # Text-to-speech API (calls ElevenLabs)
 │       │   └── page.tsx     # Main chat UI
 │       └── src/
 │           ├── components/  # React components
@@ -88,6 +99,7 @@ bandhubol/
 │       └── src/
 │           ├── conversation/ # Prompt building, turn handling
 │           ├── openai/       # OpenAI client wrapper
+│           ├── elevenlabs/   # ElevenLabs TTS client
 │           ├── supabase/     # Supabase persistence
 │           └── safety/       # Mood detection
 └── supabase/
@@ -120,4 +132,19 @@ bandhubol/
 | Arjun 🌿 | Calm, logical | Grounded & practical |
 | Meera ✨ | Playful, friendly | Playful & supportive |
 | Kabir 🔮 | Direct but kind | Honest & thoughtful |
+
+## Voice Features (ElevenLabs)
+
+Each avatar has a unique voice powered by ElevenLabs:
+
+| Avatar | Voice Style | ElevenLabs Voice |
+|--------|-------------|------------------|
+| Riya 🌸 | Warm, empathetic | Rachel |
+| Arjun 🌿 | Calm, grounded | Antoni |
+| Meera ✨ | Friendly, playful | Bella |
+| Kabir 🔮 | Direct, thoughtful | Arnold |
+
+Click the 🔈 button on any assistant message to hear it spoken aloud.
+
+The voices use the `eleven_multilingual_v2` model for natural Hindi/Hinglish support.
 

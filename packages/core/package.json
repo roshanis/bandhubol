@@ -10,6 +10,7 @@
     "lint": "echo \"no lint configured yet\""
   },
   "dependencies": {
+    "@elevenlabs/elevenlabs-js": "^2.25.0",
     "@supabase/supabase-js": "^2.86.0",
     "openai": "^6.9.1"
   }

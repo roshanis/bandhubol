@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { ChatWindow } from "../src/components/ChatWindow";
 import { AvatarPicker, type AvatarOption } from "../src/components/AvatarPicker";
 import { useDemoConversation } from "../src/hooks/useDemoConversation";
+import { useTextToSpeech } from "../src/hooks/useTextToSpeech";
 import type { AvatarPersona, LanguagePreference } from "@bandhubol/core";
 
 const defaultAvatars: AvatarOption[] = [
@@ -57,6 +58,10 @@ export default function HomePage() {
     languagePreference
   );
 
+  const { speak, isPlaying, isLoading: isLoadingAudio } = useTextToSpeech({
+    avatarId: selectedAvatarId,
+  });
+
   return (
     <main className="page">
       <section className="hero">
@@ -81,6 +86,9 @@ export default function HomePage() {
           messages={messages}
           isSending={isSending}
           onSend={send}
+          onSpeak={speak}
+          isSpeaking={isPlaying}
+          isLoadingAudio={isLoadingAudio}
         />
       </section>
     </main>

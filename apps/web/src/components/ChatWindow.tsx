@@ -11,9 +11,19 @@ export interface ChatWindowProps {
   messages: ChatMessageView[];
   onSend: (text: string) => void;
   isSending?: boolean;
+  onSpeak?: (text: string) => void;
+  isSpeaking?: boolean;
+  isLoadingAudio?: boolean;
 }
 
-export function ChatWindow({ messages, onSend, isSending }: ChatWindowProps) {
+export function ChatWindow({ 
+  messages, 
+  onSend, 
+  isSending,
+  onSpeak,
+  isSpeaking,
+  isLoadingAudio,
+}: ChatWindowProps) {
   const [draft, setDraft] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -50,7 +60,27 @@ export function ChatWindow({ messages, onSend, isSending }: ChatWindowProps) {
                 key={msg.id}
                 className={`chat-message chat-message-${msg.role}`}
               >
-                <div className="chat-bubble">{msg.content}</div>
+                <div className="chat-bubble">
+                  {msg.content}
+                  {msg.role === "assistant" && onSpeak && (
+                    <button
+                      type="button"
+                      className="speak-button"
+                      onClick={() => onSpeak(msg.content)}
+                      disabled={isLoadingAudio || isSpeaking}
+                      aria-label={isSpeaking ? "Playing audio" : "Play message"}
+                      title={isSpeaking ? "Playing..." : "Listen to message"}
+                    >
+                      {isLoadingAudio ? (
+                        <span className="speak-loading">⏳</span>
+                      ) : isSpeaking ? (
+                        <span className="speak-playing">🔊</span>
+                      ) : (
+                        <span className="speak-icon">🔈</span>
+                      )}
+                    </button>
+                  )}
+                </div>
               </div>
             ))}
             {isSending && (
