@@ -45,6 +45,15 @@ ELEVENLABS_API_KEY=your-elevenlabs-api-key-here
 2. Create a new API key
 3. Copy it to `OPENAI_API_KEY`
 
+**GPT-5 Model Options:**
+- `gpt-5` — Full model, maximum capability
+- `gpt-5-mini` — Faster, cost-efficient (default)
+- `gpt-5-nano` — Lightweight, fastest
+
+**GPT-5 Parameters (configured in code):**
+- `verbosity`: Controls response length (`low`, `medium`, `high`)
+- `reasoning_effort`: Controls reasoning depth (`minimal`, `default`, `high`)
+
 #### Supabase (Optional)
 1. Create a project at [Supabase](https://supabase.com)
 2. Go to Project Settings > API

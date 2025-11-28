@@ -80,10 +80,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Create OpenAI client (using gpt-5-mini as default)
+    // GPT-5 parameters optimized for emotional companion conversations
     const llm = createOpenAIClient({
       apiKey: openaiKey,
       model: process.env.OPENAI_MODEL ?? "gpt-5-mini",
       maxCompletionTokens: 4096,
+      // GPT-5 specific settings for empathetic, thoughtful responses
+      verbosity: "medium",       // Balanced response length
+      reasoningEffort: "medium", // Appropriate reasoning for emotional support
     });
 
     const avatar = avatarPersonas[avatarId];
