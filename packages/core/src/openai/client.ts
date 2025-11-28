@@ -19,7 +19,7 @@ export class OpenAIClient implements LanguageModelClient {
     this.client = new OpenAI({
       apiKey: config.apiKey,
     });
-    this.model = config.model ?? "gpt-5-mini";
+    this.model = config.model ?? "gpt-4o-mini";
     this.temperature = config.temperature;
     this.maxCompletionTokens = config.maxCompletionTokens ?? 4096;
   }
