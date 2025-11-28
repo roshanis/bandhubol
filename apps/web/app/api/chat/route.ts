@@ -79,11 +79,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create OpenAI client (using gpt-5 as default)
+    // Create OpenAI client (using gpt-5-mini as default)
     const llm = createOpenAIClient({
       apiKey: openaiKey,
-      model: process.env.OPENAI_MODEL ?? "gpt-5",
-      maxCompletionTokens: 1024,
+      model: process.env.OPENAI_MODEL ?? "gpt-5-mini",
+      maxCompletionTokens: 4096,
     });
 
     const avatar = avatarPersonas[avatarId];
