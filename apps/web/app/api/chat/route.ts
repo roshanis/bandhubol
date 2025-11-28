@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
       apiKey: openaiKey,
       model: process.env.OPENAI_MODEL ?? "gpt-5",
       temperature: 0.8,
-      maxTokens: 1024,
+      maxCompletionTokens: 1024,
     });
 
     const avatar = avatarPersonas[avatarId];

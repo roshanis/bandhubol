@@ -6,14 +6,14 @@ export interface OpenAIClientConfig {
   apiKey: string;
   model?: string;
   temperature?: number;
-  maxTokens?: number;
+  maxCompletionTokens?: number;
 }
 
 export class OpenAIClient implements LanguageModelClient {
   private client: OpenAI;
   private model: string;
   private temperature: number;
-  private maxTokens: number;
+  private maxCompletionTokens: number;
 
   constructor(config: OpenAIClientConfig) {
     this.client = new OpenAI({
@@ -21,7 +21,7 @@ export class OpenAIClient implements LanguageModelClient {
     });
     this.model = config.model ?? "gpt-5";
     this.temperature = config.temperature ?? 0.8;
-    this.maxTokens = config.maxTokens ?? 1024;
+    this.maxCompletionTokens = config.maxCompletionTokens ?? 1024;
   }
 
   async chat(messages: ChatMessage[]): Promise<string> {
@@ -32,7 +32,7 @@ export class OpenAIClient implements LanguageModelClient {
         content: m.content,
       })),
       temperature: this.temperature,
-      max_tokens: this.maxTokens,
+      max_completion_tokens: this.maxCompletionTokens,
     });
 
     const content = response.choices[0]?.message?.content;
