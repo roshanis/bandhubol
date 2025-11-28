@@ -1,33 +1,17 @@
-import { useState } from "react";
-import {
-  type AvatarPersona,
-  type ConversationMessage,
-  type LanguagePreference,
-  type UserContext,
-  runConversationTurn,
-  type LanguageModelClient,
-  type ChatMessage
+import { useState, useCallback } from "react";
+import type {
+  AvatarPersona,
+  ConversationMessage,
+  LanguagePreference,
 } from "@bandhubol/core";
 import type { ChatMessageView } from "../components/ChatWindow";
 
-class DemoLlmClient implements LanguageModelClient {
-  async chat(messages: ChatMessage[]): Promise<string> {
-    const lastUser = [...messages].reverse().find((m) => m.role === "user");
-    const userText = lastUser?.content ?? "";
-    return (
-      "I’m here with you. This is a demo BandhuBol companion response.\n\n" +
-      "You said: \"" +
-      userText +
-      "\". In the future, this reply will come from a real multilingual emotional AI tuned for your avatar and mood."
-    );
-  }
+interface ChatApiResponse {
+  userMessage: ConversationMessage;
+  assistantMessage: ConversationMessage;
+  moodTag: string;
+  error?: string;
 }
-
-const demoUser: UserContext = {
-  id: "demo-user",
-  name: "Friend",
-  preferredLanguage: "hinglish"
-};
 
 export function useDemoConversation(
   avatar: AvatarPersona | null,
@@ -35,41 +19,60 @@ export function useDemoConversation(
 ) {
   const [messages, setMessages] = useState<ConversationMessage[]>([]);
   const [isSending, setIsSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const llm = new DemoLlmClient();
-
-  const send = async (text: string) => {
+  const send = useCallback(async (text: string) => {
     if (!avatar) return;
 
     setIsSending(true);
-    try {
-      const result = await runConversationTurn(
-        {
-          user: demoUser,
-          avatar,
-          existingMessages: messages,
-          userInput: text,
-          languagePreference
-        },
-        { llm }
-      );
+    setError(null);
 
-      setMessages((prev) => [...prev, result.userMessage, result.assistantMessage]);
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: text,
+          avatarId: avatar.id,
+          languagePreference,
+          existingMessages: messages,
+        }),
+      });
+
+      const data: ChatApiResponse = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error ?? "Failed to send message");
+      }
+
+      setMessages((prev) => [...prev, data.userMessage, data.assistantMessage]);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Something went wrong";
+      setError(errorMessage);
+      console.error("Chat error:", err);
     } finally {
       setIsSending(false);
     }
-  };
+  }, [avatar, languagePreference, messages]);
+
+  const clearMessages = useCallback(() => {
+    setMessages([]);
+    setError(null);
+  }, []);
 
   const viewMessages: ChatMessageView[] = messages.map((m) => ({
     id: m.id,
     role: m.role,
-    content: m.content
+    content: m.content,
   }));
 
   return {
     messages: viewMessages,
     isSending,
-    send
+    error,
+    send,
+    clearMessages,
   };
 }
-

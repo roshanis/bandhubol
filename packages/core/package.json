@@ -8,5 +8,9 @@
     "build": "tsc -p tsconfig.build.json",
     "test": "vitest run",
     "lint": "echo \"no lint configured yet\""
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.86.0",
+    "openai": "^6.9.1"
   }
 }
